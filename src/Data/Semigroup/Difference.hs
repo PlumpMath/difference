@@ -55,7 +55,7 @@ foldr1m f = unimprove . foldMap1 (diffMaybe . f)
 
 -- | Right-associative fold of a nonempty structure.
 foldr1 :: Foldable1 t => (a -> a -> a) -> t a -> a
-foldr1 f = foldr1m (\a -> maybe a (f a))
+foldr1 f = unimprove . foldMap1 (\a -> Diff (f a) a)
 
 -- | Left-associative fold of a nonempty structure, with a base case.
 foldl1m :: Foldable1 t => (Maybe b -> a -> b) -> t a -> b
@@ -63,7 +63,7 @@ foldl1m f = unimprove . getDual . foldMap1 (Dual . diffMaybe . flip f)
 
 -- | Left-associative fold of a nonempty structure.
 foldl1 :: Foldable1 t => (a -> a -> a) -> t a -> a
-foldl1 f = foldl1m (flip $ \a -> maybe a (flip f a))
+foldl1 f = unimprove . getDual . foldMap1 (\a -> Dual $ Diff (flip f a) a)
 
 -- | Nonempty list of elements of a nonempty structure.
 toList1 :: Foldable1 t => t a -> NonEmpty a
