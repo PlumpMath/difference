@@ -18,6 +18,7 @@ import Data.Semigroup.Foldable
 
 import Prelude hiding (foldr1, foldl1)
 
+
 -- | Difference semigroup.
 data Diff a = Diff (a -> a) a
 
@@ -32,6 +33,7 @@ improve a = Diff (a <>) a
 unimprove :: Diff a -> a
 unimprove ~(Diff _ a) = a
 
+
 -- | One direction of the isomorphisn between @'Diff' a@ and @'Maybe' a -> a@.
 maybeDiff :: Diff a -> Maybe a -> a
 maybeDiff (Diff a' a) = maybe a a'
@@ -39,6 +41,9 @@ maybeDiff (Diff a' a) = maybe a a'
 -- | The other direction of the isomorphisn between @'Diff' a@ and @'Maybe' a -> a@.
 diffMaybe :: (Maybe a -> a) -> Diff a
 diffMaybe f = Diff (f . Just) (f Nothing)
+
+
+-- These folds should really be in Data.Semigroup.Foldable.
 
 -- | Right-associative fold of a nonempty structure, with a base case.
 foldr1m :: Foldable1 t => (a -> Maybe b -> b) -> t a -> b
