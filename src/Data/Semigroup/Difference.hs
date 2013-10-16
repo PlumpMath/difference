@@ -25,6 +25,10 @@ data Diff a = Diff (a -> a) a
 instance Semigroup (Diff a) where
     ~(Diff a' a) <> ~(Diff b' b) = Diff (a' . b') (a' b)
 
+instance Monoid a => Monoid (Diff a) where
+    mempty = Diff id mempty
+    mappend = (<>)
+
 -- | Converting a normal semigroup to a difference semigroup.
 improve :: Semigroup a => a -> Diff a
 improve a = Diff (a <>) a
