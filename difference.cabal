@@ -27,3 +27,5 @@ library
     build-depends:      base >= 4 && < 5,
                         semigroups >= 0.3,
                         semigroupoids
+    if impl(ghc < 7.5)
+        build-depends:  ghc-prim
