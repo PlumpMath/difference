@@ -15,7 +15,7 @@ module Data.Semigroup.Difference (
 -- ** Difference semigroup
     Diff(..),
     improve, unimprove,
-    diffMaybe, maybeDiff,
+    maybeDiff, diffMaybe,
 
 -- ** Folds
     foldr1m, foldr1,
@@ -69,11 +69,14 @@ improve a = Diff (a <>) a
 
 -- | Converting a difference semigroup back to a normal semigroup.
 unimprove :: Diff a -> a
-unimprove ~(Diff _ a) = a
+unimprove (Diff _ a) = a
 {-# INLINE unimprove #-}
 
 
 -- | One direction of the isomorphism between @'Diff' a@ and @'Maybe' a -> a@.
+--
+-- Converts the @'Diff' a@ back to an 'a', optionally @'<>'@-ing it together
+-- with a given 'a'.
 maybeDiff :: Diff a -> Maybe a -> a
 maybeDiff (Diff a' a) = maybe a a'
 {-# INLINE maybeDiff #-}

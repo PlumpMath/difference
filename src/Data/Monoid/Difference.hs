@@ -1,10 +1,8 @@
 module Data.Monoid.Difference (
 
-    Endo(..),
-
 -- ** Difference monoid
-    improve,
-    unimprove,
+    Endo(..),
+    improve, unimprove,
 
 ) where
 
