@@ -23,7 +23,7 @@ import Prelude hiding (foldr1, foldl1)
 data Diff a = Diff (a -> a) a
 
 instance Semigroup (Diff a) where
-    ~(Diff a' a) <> ~(Diff b' b) = Diff (a' . b') (a' b)
+    ~(Diff a' _) <> ~(Diff b' b) = Diff (a' . b') (a' b)
 
 instance Monoid a => Monoid (Diff a) where
     mempty = Diff id mempty
@@ -38,11 +38,11 @@ unimprove :: Diff a -> a
 unimprove ~(Diff _ a) = a
 
 
--- | One direction of the isomorphisn between @'Diff' a@ and @'Maybe' a -> a@.
+-- | One direction of the isomorphism between @'Diff' a@ and @'Maybe' a -> a@.
 maybeDiff :: Diff a -> Maybe a -> a
 maybeDiff (Diff a' a) = maybe a a'
 
--- | The other direction of the isomorphisn between @'Diff' a@ and @'Maybe' a -> a@.
+-- | The other direction of the isomorphism between @'Diff' a@ and @'Maybe' a -> a@.
 diffMaybe :: (Maybe a -> a) -> Diff a
 diffMaybe f = Diff (f . Just) (f Nothing)
 
