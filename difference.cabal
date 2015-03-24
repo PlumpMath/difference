@@ -7,19 +7,23 @@ license:                BSD3
 license-file:           LICENSE
 author:                 Adrian Keet
 maintainer:             Adrian Keet <arkeet@gmail.com>
-copyright:              (C) 2013 Adrian Keet
+copyright:              (C) 2013-2015 Adrian Keet
 category:               Data
 build-type:             Simple
-tested-with:            GHC == 7.6.3
 synopsis:               Difference semigroups and monoids
 description:
     This package provides semigroup and monoid analogues of difference lists,
     reassociating the binary operation to the right.
 
+source-repository head
+    type: git
+    location: git://github.com/arkeet/difference.git
+
 library
     hs-source-dirs:     src
-    exposed-modules:    Data.Semigroup.Difference,
+    exposed-modules:    Data.Semigroup.Difference
                         Data.Monoid.Difference
-    build-depends:      base >= 4,
+    ghc-options:        -Wall
+    build-depends:      base >= 4 && < 5,
                         semigroups >= 0.3,
                         semigroupoids
