@@ -22,6 +22,7 @@ module Data.Semigroup.Difference (
     foldl1m, foldl1,
     toList1,
 
+    foldl0,
 ) where
 
 import Data.List.NonEmpty
@@ -106,8 +107,12 @@ foldl1m f = unimprove . getDual . foldMap1 (Dual . diffMaybe . flip f)
 
 -- | Left-associative fold of a nonempty structure.
 foldl1 :: Foldable1 t => (a -> a -> a) -> t a -> a
-foldl1 f = unimprove . getDual . foldMap1 (\a -> Dual $ Diff (flip f a) a)
+foldl1 f t = unimprove (getDual (foldMap1 (\a -> Dual $ Diff (flip f a) a) t))
 {-# INLINE foldl1 #-}
+
+-- | Left-associative fold of a nonempty structure, with a base case.
+foldl0 :: Foldable1 t => (b -> a -> b) -> b -> t a -> b
+foldl0 f z t = appEndo (getDual (foldMap1 (Dual . Endo . flip f) t)) z
 
 -- | Nonempty list of elements of a nonempty structure.
 toList1 :: Foldable1 t => t a -> NonEmpty a
