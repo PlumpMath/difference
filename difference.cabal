@@ -10,6 +10,8 @@ maintainer:             Adrian Keet <arkeet@gmail.com>
 copyright:              (C) 2013-2015 Adrian Keet
 category:               Data
 build-type:             Simple
+tested-with:            GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4,
+                        GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.1
 synopsis:               Difference semigroups and monoids
 description:
     This package provides semigroup and monoid analogues of difference lists,
